@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jogo da Bolinha</title>
+</head>
+<body>
+    <canvas id="meuCanvas" width="400" height="300" style="border: 5px solid black;"></canvas>
+
+    <script>
+        const canvas = document.getElementById("meuCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Variáveis
+        // bolinha
+        let x = canvas.width / 2; // começa no meio da tela
+        let y = canvas.height - 30; // começa na parte de baixo
+
+        let dx = 3; // velocidade horizontal
+        let dy = -3; // velocidade vertical
+        const raio = 10; // raio da bolinha
+
+        // raquete
+        const raqueteAltura = 10; // altura da raquete
+        const raqueteLargura = 75; // largura da raquete
+        let raqueteX = (canvas.width - raqueteLargura) / 2; // posição x da raquete (horizontal)
+
+        // controle
+        let teclaDireita = false; // vira true quando aperta
+        let teclaEsquerda = false; // vira true quando aperta
+
+        // eventos do teclado
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowRight") {
+                teclaDireita = true;
+            } else if (e.key === "ArrowLeft") {
+                teclaEsquerda = true;
+            }
+        });
+
+        document.addEventListener("keyup", function (e) {
+            if (e.key === "ArrowRight") {
+                teclaDireita = false;
+            } else if (e.key === "ArrowLeft") {
+                teclaEsquerda = false;
+            }
+        });
+
+        // desenhar bolinha
+        function desenharBola() {
+            ctx.beginPath();
+            ctx.arc(x, y, raio, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // desenhar raquete
+        function desenharRaquete() {
+            ctx.beginPath();
+            ctx.rect(raqueteX, canvas.height - raqueteAltura - 5, raqueteLargura, raqueteAltura);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // animação
+        function desenhar() {
+            // Parte 1: Limpar o canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Parte 2: Desenhar os elementos
+            desenharBola();
+            desenharRaquete();
+
+            // Parte 3: Atualizo a posição da bolinha usando a velocidade
+            x += dx;
+            y += dy;
+
+            // Parte 4: Verificar colisões horizontais
+            if (x + dx > canvas.width - raio || x + dx < raio) {
+                dx = -dx;
+            }
+
+            // Parte 5: Verificar colisões verticais
+            if (y + dy < raio) {
+                dy = -dy;
+            }
+
+            // Parte 6: Verificar colisão com a parte de baixo (raquete e fundo)
+            else if (y + dy > canvas.height - raio) {
+                // se a bolinha estiver dentro da área da raquete, vai rebater
+                if (x > raqueteX && x < raqueteX + raqueteLargura) {
+                    dy = -dy;
+                } else {
+                    alert("Game over!");
+                    document.location.reload(); // reinicia o jogo
+                    return;
+                }
+            }
+
+            // Parte 7: Movimentar a raquete com as setas
+            if (teclaDireita && raqueteX < canvas.width - raqueteLargura) {
+                raqueteX += 7;
+            } else if (teclaEsquerda && raqueteX > 0) {
+                raqueteX -= 7;
+            }
+
+            // Parte 8: Rodar no navegador
+            requestAnimationFrame(desenhar);
+        }
+
+        // inicia a animação
+        desenhar();
+    </script>
+</body>
+</html>

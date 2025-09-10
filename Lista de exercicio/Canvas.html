@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            border-radius: 15px;
+            margin: 10px;
+            display: flex;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <!-- 1. Quadrado Verde -->
+    <div class="section">
+        <canvas id="canvas1" width="300" height="300"></canvas>
+    </div>
+    <!-- 2. Círculo Vermelho -->
+    <div class="section">
+        <canvas id="canvas2" width="300" height="300"></canvas>
+    </div>
+    <!-- 3. Apagar Parte do Quadrado -->
+    <div class="section">
+        <canvas id="canvas3" width="300" height="300"></canvas>
+    </div>
+    <!-- 4. Desenhos Diversos -->
+    <div class="section">
+        <canvas id="canvas4_1" width="300" height="300"></canvas>
+    </div>
+    <div class="section">
+        <canvas id="canvas4_2" width="300" height="300"></canvas>
+    </div>
+    <div class="section">
+        <canvas id="canvas4_3" width="300" height="300"></canvas>
+    </div>
+    <script>
+        // Desenhar Quadrado Verde
+        function DesenharQuadradoVerde() {
+            const ctx = document.getElementById('canvas1').getContext('2d');
+            ctx.fillStyle = 'green';
+            ctx.fillRect(50, 50, 200, 200);
+        }
+
+        // Desenhar Círculo Vermelho
+        function DesenharCirculoVermelho() {
+            const ctx = document.getElementById('canvas2').getContext('2d');
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(150, 150, 50, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Desenhar Apagar Parte do Quadrado
+        function DesenharApagarQuadrado() {
+            const ctx = document.getElementById('canvas3').getContext('2d');
+            ctx.fillStyle = 'green';
+            ctx.fillRect(50, 50, 200, 200);
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(150, 150, 40, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        // Desenhar Carinha Feliz
+        function DesenharCarinhaFeliz() {
+            const ctx = document.getElementById('canvas4_1').getContext('2d');
+            // Cabeça
+            ctx.beginPath();
+            ctx.fillStyle = 'yellow';
+            ctx.arc(150, 150, 60, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+            // Olhos
+            ctx.beginPath();
+            ctx.fillStyle = 'black';
+            ctx.arc(130, 130, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(170, 130, 8, 0, 2 * Math.PI);
+            ctx.fill();
+            // Boca
+            ctx.beginPath();
+            ctx.arc(150, 160, 30, 0, Math.PI);
+            ctx.stroke();
+        }
+
+        // Desenhar Casa Simples
+        function DesenharCasaSimples() {
+            const ctx = document.getElementById('canvas4_2').getContext('2d');
+            // Base
+            ctx.fillStyle = 'brown';
+            ctx.fillRect(100, 150, 100, 100);
+            // Telhado
+            ctx.beginPath();
+            ctx.fillStyle = 'gray';
+            ctx.moveTo(100, 150);
+            ctx.lineTo(150, 100);
+            ctx.lineTo(200, 150);
+            ctx.closePath();
+            ctx.fill();
+            // Porta
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(140, 200, 20, 50);
+        }
+
+        // Desenhar Bandeira do Brasil
+        function DesenharBandeiraBrasil() {
+            const ctx = document.getElementById('canvas4_3').getContext('2d');
+            // Fundo verde
+            ctx.fillStyle = 'green';
+            ctx.fillRect(75, 100, 150, 100);
+            // Losango amarelo
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.moveTo(150, 110); // Top
+            ctx.lineTo(200, 150); // Right
+            ctx.lineTo(150, 190); // Bottom
+            ctx.lineTo(100, 150); // Left
+            ctx.closePath();
+            ctx.fill();
+            // Círculo azul
+            ctx.fillStyle = 'blue';
+            ctx.beginPath();
+            ctx.arc(150, 150, 20, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        DesenharQuadradoVerde();
+        DesenharCirculoVermelho();
+        DesenharApagarQuadrado();
+        DesenharCarinhaFeliz();
+        DesenharCasaSimples();
+        DesenharBandeiraBrasil();
+    </script>
+</body>
+</html>
