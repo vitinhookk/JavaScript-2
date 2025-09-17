@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+.container{
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 500px) {
+    body {
+        background-color: lightblue;
+    }
+    h1 {
+        font-size: 20px;
+        color: blue;
+    }
+    p {
+        font-size: 14px;
+    }
+}
